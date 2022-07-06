@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+	<head>
+		<meta charset="UTF-8">
+		<meta http-equiv="X-UA-Compatible">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no">
+		
+		<title>YourLicense</title>
+		<script type="text/javascript" th:src="|https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId=${clientId}&submodules=geocoder|"></script>
+	</head>
+	<body>
+		<h1>Check your license plate</h1>
+		
+		<div id="map" style="width:100%;height:400px;"></div>
+
+		<script>
+		function success({ coords, timestamp }) {
+            latitude = coords.latitude;   // 위도
+            longitude = coords.longitude; // 경도
+            console.log("?",latitude, longitude)
+            
+            map = new naver.maps.Map('map', setOption());
+            event(map)
+        }
+		function setOption(){
+        	console.log(latitude, longitude)
+        	 return {
+ 				center: new naver.maps.LatLng(latitude, longitude),
+ 				zoom: 15,
+ 				mapTypeId: naver.maps.MapTypeId.HYBRID
+ 			};
+        }
+        function getUserLocation() {
+            if (!navigator.geolocation) {
+                throw "위치 정보가 지원되지 않습니다.";
+            }
+            navigator.geolocation.getCurrentPosition(success);
+        }
+        
+        function setPolylist(map, markers, paths){
+        	for (let i=0, ii=markers.length; i<ii; i++) {
+    	    	// paths
+    	    	var pos = markers[i].position;
+    	    	paths.push(pos)
+        	}
+    	    console.log(paths.length)
+    	    
+    	    let polyline = new naver.maps.Polyline({
+        	    map: map,
+        	    path: paths,
+        	    strokeColor: '#5347AA',
+        	    strokeWeight: 2
+        	});
+        }
+        
+        
+        function event(map){
+        	let isDelete = false
+        	let markers = []
+        	let paths =[];
+        	
+        	naver.maps.Event.addListener(map, 'click', function(e) {
+        		console.log("위")
+        		let polyline = null;
+        		
+        	    var point = new naver.maps.LatLng(e.coord);
+				console.log(point)
+        	    var marker = new naver.maps.Marker({
+        	        map: map,
+        	        position: point,
+        	        zIndex: 100
+        	    });
+        	 	// paths
+    	    	var pos = marker.position;
+    	    	
+        	 	paths.push(pos)
+        	    markers.push(marker)
+        	    
+        	    for (let i=0, ii=markers.length; i<ii; i++) {
+        	    	// 마커 클릭시
+        	    	naver.maps.Event.clearListeners(markers[i], 'click')
+	        	    naver.maps.Event.addListener(markers[i], 'click', function(e){
+	        	    	let mark = markers[i]
+	        	    	markers.splice(i,1);
+	        	    	
+	        	    	paths.splice(i,1);
+	        	    	isDelete = true
+	        	    	//polyline = null
+	        	    	//polyline = new naver.maps.Polyline({
+	    	        	//   map: map,
+	    	        	//    path: paths,
+	    	        	//    strokeColor: '#5347AA',
+	    	        	//    strokeWeight: 2
+	    	        	//});
+	        	    	
+	        	    	
+	        	    	console.log(paths.length, markers.length)
+	        	    	
+	        	        mark.setMap(null);
+	        	    });        	    	
+	        	}
+        	    console.log(paths.length) 
+        	});
+        	
+        	naver.maps.Event.addListener(map, 'click', function(e){
+				console.log("아래");
+				if (isDelete){
+					polyline.setMap(null);	
+				}
+				polyline = new naver.maps.Polyline({
+	        	    map: map,
+	        	    path: paths,
+	        	    strokeColor: '#5347AA',
+	        	    strokeWeight: 2
+	        	});
+			});
+
+        }
+        	// 현재 위도 경도 가져오기 
+		var latitude = 37.6;
+		var longitude = 126.95;
+		getUserLocation();
+		var map = new naver.maps.Map('map', setOption());
+		event(map)
+		</script>
+		<div th:text="${clientId}"></div>
+		<input type="text" id="test">
+		
+	</body>
+</html>
