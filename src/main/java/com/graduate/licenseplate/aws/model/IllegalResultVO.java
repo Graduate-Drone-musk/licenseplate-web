@@ -16,6 +16,7 @@ import lombok.Setter;
 public class IllegalResultVO {
 	private String status;
 	private String message;
+	private String allPageCount;
 	private List<IllegalImage> illegalList;  
 } 
 //{

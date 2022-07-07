@@ -1,7 +1,5 @@
 package com.graduate.licenseplate.illegal.model;
 
-import com.graduate.licenseplate.member.entity.IllegalMember;
-
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
@@ -14,4 +12,5 @@ public class IllegalLicenseVO {
 	private String date;
 	private String lpUrl;
 	private String originUrl;
+	private String time;
 }

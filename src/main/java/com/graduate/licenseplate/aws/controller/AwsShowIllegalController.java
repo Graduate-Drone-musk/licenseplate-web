@@ -14,14 +14,14 @@ public class AwsShowIllegalController {
 		this.awsFileService = awsFileService;
 	}
 	
-	@GetMapping("/show")
+	@GetMapping("/test")
 	public String showImg() {
 		System.out.println("??");
-		String startTime = "20220626";
-		String endTime = "20220626";
-//		awsFileService.getUrlWithCondition(startTime, endTime);
+		
 //		awsFileService.readTxtFile();
 		awsFileService.uploadImgfile();
 		return "show/illegal";
 	}
+	
+
 }

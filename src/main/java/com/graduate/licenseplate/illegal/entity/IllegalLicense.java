@@ -30,7 +30,8 @@ public class IllegalLicense {
 
 	private String licenseplate;
 	
-	private String date;
+	private Integer date;
+	private Integer time;
 	private String lpUrl;
 	private String originUrl;
 	

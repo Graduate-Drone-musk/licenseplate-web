@@ -69,91 +69,13 @@ public class AwsFileServiceImpl implements AwsFileService{
 	}
 	
 	// 현재 날짜
-		public String getToday() {
-			LocalDate now = LocalDate.now();
-			DateTimeFormatter format = DateTimeFormatter.ofPattern("yyyyMMdd");
-			return now.format(format);
-		}
-	
-	// 유효시간 검사
-	public Date getExpiration() {
-		Date expiration = new Date();
-		long expTimeMills = Instant.now().toEpochMilli();
-		expTimeMills += 1000*60*60*24; 
-		expiration.setTime(expTimeMills);
-		return expiration;
-	}
-	
 	@Override
-	public IllegalResultVO getUrlWithCondition(String startTime, String endTime) {
-		if (startTime.isEmpty() && !endTime.isEmpty()){
-			return IllegalResultVO.builder()
-					.status("error")
-					.message("시작 조건이 없습니다.")
-					.illegalList(null)
-					.build();
-		}
-		if (!startTime.isEmpty() && endTime.isEmpty()){
-			return IllegalResultVO.builder()
-					.status("error")
-					.message("끝 조건이 없습니다.")
-					.illegalList(null)
-					.build();
-		}
-
-		ListObjectsV2Request prefix = null;
-		ListObjectsV2Result result = null;
-		
-		if (startTime.isEmpty() && endTime.isEmpty()) {
-			prefix = new ListObjectsV2Request().withBucketName(bucketName);
-			result = s3.listObjectsV2(prefix);
-		}
-		else {
-			prefix = new ListObjectsV2Request().withBucketName(bucketName).withPrefix("illegal_file/20220626");
-			result = s3.listObjectsV2(prefix);
-		}
-		
-		// 만료 시간
-		Date expiration = getExpiration();
-		
-		
-		
-		List<IllegalImage> illegalList = new ArrayList<IllegalImage>();
-		
-		List<S3ObjectSummary> objects = result.getObjectSummaries();
-		System.out.println(Arrays.toString("1_2__3".split("__")));
-		String originUrl = null;
-		
-		for (S3ObjectSummary os : objects) {
-			String[] osSplit = os.getKey().split("\\.");
-			if("txt".equals(osSplit[1])) {
-				System.out.println("txt!");
-				// Read txt file and get data
-			}
-			else {
-				String[] jpgFilePath = osSplit[0].split("/");
-				String[] jpgFile = jpgFilePath[jpgFilePath.length - 1].split("__"); 
-				
-				// 원본 이미지
-				if(jpgFile.length == 1) {
-					originUrl = os.getKey();
-				}
-				else if(jpgFile.length == 2) {
-					System.out.println("2");
-				}
-				
-				GeneratePresignedUrlRequest presignedUrl = new GeneratePresignedUrlRequest(bucketName, os.getKey())
-						.withMethod(HttpMethod.GET)
-						.withExpiration(expiration);
-				URL url2 = s3.generatePresignedUrl(presignedUrl);
-			    System.out.println("- " + url2);
-			}
-			
-			
-		}
-		return null;
+	public String getToday() {
+		LocalDate now = LocalDate.now();
+		DateTimeFormatter format = DateTimeFormatter.ofPattern("yyyyMMdd");
+		return now.format(format);
 	}
-	
+
 	public IllegalReturn addOriginData(IllegalLicenseVO licenseVo) {
 		OriginMember member = OriginMember.builder()
 				.registrationNumber("1234560123456")
@@ -198,7 +120,8 @@ public class AwsFileServiceImpl implements AwsFileService{
 		IllegalMember illegalMember = getOrigin2Illegalmember(member);
 		IllegalLicense illegalLicense = IllegalLicense.builder()
 				.licenseplate(license.getLicenseplate())
-				.date(licenseVo.getDate())
+				.date(Integer.valueOf(licenseVo.getDate()))
+				.time(Integer.valueOf(licenseVo.getTime()))
 				.lpUrl(licenseVo.getLpUrl())
 				.originUrl(licenseVo.getOriginUrl())
 				.illegalMember(illegalMember)
@@ -302,6 +225,7 @@ public class AwsFileServiceImpl implements AwsFileService{
 				IllegalLicenseVO licenseVo = IllegalLicenseVO.builder()
 						.licenseplate(lastName[2])
 						.date(today)
+						.time(lastName[0])
 						.lpUrl(path)
 						.originUrl(origin.toString())
 						.build();	
@@ -322,7 +246,6 @@ public class AwsFileServiceImpl implements AwsFileService{
 		return null;
 	}
 	
-
 	public boolean uploadCheckText(Set<String> setPath, String prefix, String existData) {
 		StringBuffer uploadData = new StringBuffer();
 		uploadData.append(existData);
