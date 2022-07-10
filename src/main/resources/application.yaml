@@ -1,11 +1,4 @@
 spring:
-  thymeleaf:
-    prefix: classpath:/templates/
-
-  datasource:
-    url: jdbc:mariadb://127.0.0.1:43306/licenseplate
-    driver-class-name: org.mariadb.jdbc.Driver
-    
   jpa:
     hibernate:
       ddl-auto: update

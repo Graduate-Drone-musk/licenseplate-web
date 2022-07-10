@@ -16,13 +16,13 @@ public interface IllegalLicenseRepository extends JpaRepository<IllegalLicense, 
 	Optional<IllegalLicense> findByLicenseplate(String plate);
 
 	@Query(value = "SELECT * FROM illegal_license license "
-			+ "ORDER BY license.time DESC "
+			+ "ORDER BY license.date DESC, license.time DESC "
 			+ "LIMIT :startIndex, :showCount", nativeQuery=true)
 	List<IllegalLicense> findLimitShowCountByDate(@Param("startIndex") Integer startIndex,@Param("showCount") Integer showCount);
 
 	@Query(value = "SELECT * FROM illegal_license license "
-			+ "WHERE license.date > :startTime AND license.date < :endTime "
-			+ "ORDER BY license.time DESC "
+			+ "WHERE license.date >= :startTime AND license.date <= :endTime "
+			+ "ORDER BY license.date DESC, license.time DESC "
 			+ "LIMIT :startIndex, :showCount", nativeQuery=true)
 	List<IllegalLicense> findIllegalByStartAndEnd(
 			@Param("startTime") Integer startTime,
@@ -34,7 +34,7 @@ public interface IllegalLicenseRepository extends JpaRepository<IllegalLicense, 
 	Integer findCountById();
 	
 	@Query(value = "SELECT COUNT(*) FROM illegal_license license "
-			+ "WHERE license.date > :startTime AND license.date < :endTime ", nativeQuery=true)
+			+ "WHERE license.date >= :startTime AND license.date <= :endTime ", nativeQuery=true)
 	Integer findCountByCondition(
 			@Param("startTime") Integer startTime,
 			@Param("endTime") Integer endTime);

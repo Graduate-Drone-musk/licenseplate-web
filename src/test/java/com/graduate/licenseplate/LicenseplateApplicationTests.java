@@ -3,7 +3,7 @@ package com.graduate.licenseplate;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
-@SpringBootTest
+@SpringBootTest(classes = LicenseplateApplicationTests.class)
 class LicenseplateApplicationTests {
 
 	@Test

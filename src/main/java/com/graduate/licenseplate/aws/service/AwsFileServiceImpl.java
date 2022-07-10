@@ -203,12 +203,11 @@ public class AwsFileServiceImpl implements AwsFileService{
 		for (S3ObjectSummary ob: objects) {	
 			String path = ob.getKey();
 			String[] pathList = path.split("/");
-
 			// 이미 올린 데이터 & check.txt 할 필요 X
 			if("check.txt".equals(pathList[2])
 					|| fileData.contains(pathList[2])) {
 				continue;
-			}
+			}			
 			
 			String[] fileName = pathList[3].split("__");	
 			
@@ -238,7 +237,7 @@ public class AwsFileServiceImpl implements AwsFileService{
 				origin.delete(0, origin.length());
 			}	
 		}
-		uploadCheckText(setPath, prefix.getPrefix(), "");
+		uploadCheckText(setPath, prefix.getPrefix(), String.join("\n", fileData));
 		
 		illegalMemberRepository.saveAll(memberList);
 		illegalLicenseRepository.saveAll(licenseList);
@@ -272,7 +271,7 @@ public class AwsFileServiceImpl implements AwsFileService{
 		List<String> fileData = new ArrayList<String>();
 		System.out.println(fileData);
 		try {
-			S3Object object = s3.getObject(new GetObjectRequest(bucketName, "illegal_file/"+today+"/check2.txt"));
+			S3Object object = s3.getObject(new GetObjectRequest(bucketName, "illegal_file/"+today+"/check.txt"));
 			System.out.println("[Text File Exist]");
 			
 			BufferedReader reader = new BufferedReader(new InputStreamReader(object.getObjectContent()));

@@ -22,6 +22,8 @@ public class AwsConfig {
 	@Value("${cloud.aws.region.static}")
 	private String region;
 	
+	
+	
 	@Bean
 	public AmazonS3 s3Client() {
 		System.out.println("[ACCESSS KEY] : "+accessKey);
