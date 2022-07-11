@@ -14,6 +14,6 @@ public class MapController {
 		
 		model.addAttribute("clientId", Secret.CLIENT_ID);
 		model.addAttribute("clientSecret", Secret.CLIENT_SECRET);
-		return "drone/map";
+		return "redirect:drone/map";
 	}
 }

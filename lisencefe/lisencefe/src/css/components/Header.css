@@ -1,0 +1,36 @@
+@import url(../reset.css);
+@import url(../Main.css);
+
+.Header {
+  display: flex;
+  justify-content: space-between;
+  background-color: #fff;
+  padding-top: 40px;
+  padding-bottom: 10px;
+  position: sticky;
+  width: 100%;
+  margin-bottom: 5%;
+  top: -30px;
+  z-index: 1;
+  font-weight: 700;
+}
+.Header .left {
+  font-size: 50px;
+  margin-left: 5%;
+  display: flex;
+  color: var(--main-color);
+}
+
+.onScrolled {
+  border-bottom: 1px solid var(#ddd);
+  box-shadow: rgb(100 100 111 / 20%) 0px 7px 29px 0px;
+}
+
+.Header .right {
+  font-size: 25px;
+  margin-right: 5%;
+}
+
+.Header .right .inright {
+  padding: 1rem;
+}

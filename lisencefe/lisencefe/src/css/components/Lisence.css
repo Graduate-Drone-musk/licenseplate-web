@@ -1,0 +1,24 @@
+.lisence {
+  width: 40%;
+  margin: 0 auto;
+  margin: 3rem;
+}
+
+.lisence .description {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  font-weight: 700;
+  line-height: 1.2rem;
+}
+
+.lisence img {
+  width: 100%;
+  object-fit: cover;
+}
+
+.lisence .plate {
+  font-size: 2rem;
+  margin: 1rem 0;
+}

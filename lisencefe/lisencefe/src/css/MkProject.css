@@ -1,0 +1,55 @@
+@import url(./Main.css);
+.MkProject {
+  padding-bottom: 5%;
+  height: 50rem;
+  display: flex;
+  justify-content: space-between;
+}
+.MkProject .description {
+  width: 40%;
+  margin-left: 10%;
+  color: var(--main-black);
+  font-size: 2rem;
+  font-weight: 700;
+}
+
+.MkProject .description p:last-of-type {
+  font-weight: 900;
+}
+
+
+
+.MkProject .project {
+  display: flex;
+  align-items: center;
+  margin-top: 13rem;
+}
+
+.MkProject .description .project .indexbtn {
+  width: 10rem;
+  height: 5rem;
+  margin-right: 2rem;
+  font-weight: 700;
+  font-size: 1.5rem;
+  border-radius: 15px;
+  border: 2px solid var(--main-color);
+  color: var(--main-color);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: 0.3s;
+}
+
+.MkProject .description .project .indexbtn:hover {
+  background: var(--main-color);
+  color: #fff;
+}
+
+.MkProject .icon {
+  width: 46rem;
+  height: 44rem;
+  background-image: url("../css/components/iconlogo.png");
+  background-size: cover;
+  background-repeat: no-repeat;
+  margin: 0 auto;
+}
