@@ -8,6 +8,7 @@ import lombok.Setter;
 @Getter
 @Setter
 public class IllegalImage {
+	private String id;
 	private String phone;
 	private String userName;
 	private String date;

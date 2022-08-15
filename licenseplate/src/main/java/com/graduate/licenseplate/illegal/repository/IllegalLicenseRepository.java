@@ -41,5 +41,5 @@ public interface IllegalLicenseRepository extends JpaRepository<IllegalLicense, 
 
 	List<IllegalLicense> findByIllegalMember_RegistrationNumber(@Param("registrationNumber") String registNum);
 	
-	
+	Optional<IllegalLicense> findById(long id);
 }
