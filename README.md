@@ -5,10 +5,13 @@ Using Spring, Get illegal plate to s3
 
 
 ## 전반적인 프로세스
+<img width="461" src="https://user-images.githubusercontent.com/54196094/178312123-f0492be4-45ce-446c-914c-09cb3754b1bf.PNG">
+
 ------------
 ### 현재 위치를 표시할 수 있는 지도 (Naver map API 사용, 개선 필요 )
   - 화면에 위치를 찍은 포인트를 리스트로 반환
   - 해당 포인트 좌표를 드론이 비행하고 오기위한 용도
+<img width="461" src="https://user-images.githubusercontent.com/54196094/178312160-08eef60d-042f-474d-9251-a85b11fc229b.PNG">
 
 ------------
 
@@ -46,6 +49,8 @@ Using Spring, Get illegal plate to s3
     ```
     동일한 구조로 user 주민등록번호로 조회 가능 
      - BE에서만 구현, FE구현 필요
+<img width="461" src="https://user-images.githubusercontent.com/54196094/178312203-b055d500-45fd-4c24-a86a-b73782241897.PNG">
+
 ------------
 
 ### 관리자 결제 기능 - 구현 필요
